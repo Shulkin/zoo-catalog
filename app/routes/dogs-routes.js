@@ -6,7 +6,7 @@ var router = express.Router();
  * Remark!
  * MongoDB wil automatically create collection named 'dogs'
  * when we put any data through api
-*/
+ */
 var Dog = require("../models/dog");
 
 // process routes api/dogs/

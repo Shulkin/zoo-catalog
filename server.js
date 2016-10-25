@@ -36,4 +36,4 @@ app.get("*", function(req, res) {
 // === Start server ===
 // listen port
 app.listen(port);
-console.log("Server started ad port " + port);
+console.log("Server started at port " + port);
