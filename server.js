@@ -1,6 +1,8 @@
 // === Initialize ===
 // grab npm modules
 var express = require("express");
+var path = require('path');
+var favicon = require('serve-favicon');
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override");
 var mongoose = require("mongoose");
@@ -19,8 +21,8 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json()); // parse application/json
 // parse application/vnd.api+json as json
-app.use(bodyParse.json({type: "application/vnd.api+json"}));
-app.use(bodyParse.urlencoded("extended": "true"));
+app.use(bodyParser.json({type: "application/vnd.api+json"}));
+app.use(bodyParser.urlencoded({"extended": "true"}));
 app.use(methodOverride());
 // load the routes
 app.use("/api/dogs", require("./app/routes/dogs-routes"));
@@ -31,7 +33,6 @@ app.get("*", function(req, res) {
   // Angular will handle the page changes on the front-end
   res.sendFile("./public/index.html");
 });
-
 // === Start server ===
 // listen port
 app.listen(port);
