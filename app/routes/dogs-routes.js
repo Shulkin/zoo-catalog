@@ -65,6 +65,11 @@ router.route("/:dog_id")
   }, function(err, dog) {
     if (err) res.send(err);
     // delete success!
+    // return list without a dog
+    Dog.find(function(err, dogs) {
+      if (err) res.send(err);
+      res.json(dogs);
+    });
   })
 });
 

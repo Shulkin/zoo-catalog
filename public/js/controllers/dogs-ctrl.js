@@ -2,38 +2,45 @@
 angular.module("dogs.ctrl", [])
 .controller("DogsCtrl", function(Dogs) {
   /*
-   * Better use 'this' instead of $scope, for several reasons
+   * Better use 'this' instead of $scope, for several reasons.
+   * But you need to declare 'this' as variable first!
    */
+  vm = this; // view model
   // init object to store new data when adding a dog
-  this.formData = {};
+  vm.formData = {};
   // when landing on page, load all dogs and show them
   Dogs.getAll()
   .success(function(data) {
+    /*
+     * Important notice!
+     * Use of vm here insted of 'this' is mandatory! 'this' here is not the
+     * same as in DogsCtrl main body.
+     */
     // populate dogs list
-    this.list = data;
+    vm.list = data;
   })
   .error(function(err) {
     console.log("Error " + err);
   });
   // create new dog
-  this.createDog = function() {
-    Dogs.create(this.formData)
+  vm.create = function() {
+    Dogs.create(vm.formData)
     .success(function(data) {
-      this.formData = {}; // clear formData
-      this.list = data; // update list with new dog
+      vm.formData = {}; // clear formData
+      vm.list = data; // update list with new dog
     })
     .error(function(err) {
       console.log("Error " + err);
-    })
+    });
   };
   // delete a dog
-  this.deleteDog = function(id) {
+  vm.delete = function(id) {
     Dogs.delete(id)
     .success(function(data) {
-      this.list = data;
+      vm.list = data;
     })
     .error(function(err) {
       console.log("Error " + err);
-    })
+    });
   }
-})
+});

@@ -1,0 +1,35 @@
+<div class="text-center">
+  <h3>This is our dogs</h3>
+</div>
+<!-- dogs list -->
+<div class="row">
+  <div class="col-sm-4 col-sm-offset-4">
+    <!-- Remark! dogs is a controller DogsCtrl -->
+    <div class="checkbox" ng-repeat="dog in dogs.list">
+      <label><input type="checkbox" ng-click="dogs.delete(dog._id)">
+        {{dog.name}} / {{dog.age}} / {{dog.breed}}
+      </label>
+    </div>
+    <button type="button" class="btn btn-default btn-sm">
+      <span class="glyphicon glyphicon-plus"></span> Add
+    </button>
+  </div>
+</div>
+<!-- modal form to create a dog -->
+<div class="row">
+  <div class="col-sm-2 text-center">
+    <form>
+      <!-- parameters -->
+      <div class="form-group">
+        <input type="text" class="form-control input-lg text-center"
+          placeholder="Name" ng-model="dogs.formData.name"> <!-- name -->
+        <input type="text" class="form-control input-lg text-center"
+          placeholder="Age" ng-model="dogs.formData.age"> <!-- age -->
+        <input type="text" class="form-control input-lg text-center"
+          placeholder="Breed" ng-model="dogs.formData.breed"> <!-- breed -->
+      </div>
+      <!-- submit this form to create new dog -->
+      <button type="submit" class="btn btn-primary btn-lg" ng-click="dogs.create()">Add</button>
+    </form>
+  </div>
+</div>

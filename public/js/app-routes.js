@@ -13,12 +13,13 @@ angular.module("zoo.routes", []).config(
   .state("dogs", {
     url: "/dogs",
     templateUrl: "./views/dogs.html",
-    controller: "DogsCtrl"
+    // use 'controller as' notation for better code in html template
+    controller: "DogsCtrl as dogs"
   })
   // nested view, dogs info
   .state("dogs.info", {
     url: "/dog-info",
     templateUrl: "./views/dogs-info.html",
-    controller: "DogsInfoCtrl"
+    controller: "DogsInfoCtrl as dog"
   });
 }]);
