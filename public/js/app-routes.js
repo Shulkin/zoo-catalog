@@ -1,4 +1,4 @@
-angular.module("zooRoutes", []).config(
+angular.module("zoo.routes", []).config(
   ["$stateProvider", "$urlRouterProvider",
   function($stateProvider, $urlRouterProvider) {
   // all other routes will lead to /home
@@ -12,13 +12,13 @@ angular.module("zooRoutes", []).config(
   // list of dogs
   .state("dogs", {
     url: "/dogs",
-    templateUrl: "./views/dogs-list.html",
-    controller: "dogsCtrl"
+    templateUrl: "./views/dogs.html",
+    controller: "DogsCtrl"
   })
   // nested view, dogs info
   .state("dogs.info", {
     url: "/dog-info",
-    templateUrl: "./views/dog-info.html",
-    controller: "dogInfoCtrl"
+    templateUrl: "./views/dogs-info.html",
+    controller: "DogsInfoCtrl"
   });
 }]);
