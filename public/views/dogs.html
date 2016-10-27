@@ -2,14 +2,14 @@
   <h3>This is our dogs</h3>
 </div>
 <!-- dogs list -->
+<!-- Remark! 'dogs' is a controller DogsCtrl -->
 <div class="row">
-  <div class="col-sm-4 col-sm-offset-4">
-    <!-- Remark! dogs is a controller DogsCtrl -->
-    <div class="checkbox" ng-repeat="dog in dogs.list">
-      <label><input type="checkbox" ng-click="dogs.delete(dog._id)">
-        {{dog.name}} / {{dog.age}} / {{dog.breed}}
-      </label>
-    </div>
+  <div class="col-lg-3 col-md-4 col-xs-6 thumb" ng-repeat="dog in dogs.list">
+    <a class="thumbnail" ng-click="dogs.delete(dog._id)">
+      {{dog.name}}
+    </a>
+  </div>
+  <div class="col-lg-3 col-md-4 col-xs-6 thumb">
     <!-- Open modal dialog to create new dog on add button click -->
     <button type="button" class="btn btn-default btn-sm" ng-click="dogs.openDialog()">
       <span class="glyphicon glyphicon-plus"></span> Add

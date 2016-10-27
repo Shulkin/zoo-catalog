@@ -32,7 +32,7 @@ angular.module("modal.ctrl", [])
   };
   /*
    * Kinda bad solution, because it throws error in dwmkerr module,
-   * on 'cancel' function
+   * on 'cancel' and 'close' functions
    */
   $element.on('hidden.bs.modal', function () {
     // try to catch modal on hide and explicitly pass it as 'cancel'
