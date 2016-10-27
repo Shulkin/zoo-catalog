@@ -1,13 +1,11 @@
 // we have access to Dogs factory through main module
 angular.module("dogs.ctrl", [])
-.controller("DogsCtrl", function(Dogs, DogsMock) {
+.controller("DogsCtrl", function(Dogs, DogsMock, ModalService) {
   /*
    * Better use 'this' instead of $scope, for several reasons.
    * But you need to declare 'this' as variable first!
    */
-  vm = this; // view model
-  // init object to store new data when adding a dog
-  vm.formData = {};
+  var vm = this; // view model
   // when landing on page, load all dogs and show them
   Dogs.getAll()
   .success(function(data) {
@@ -25,10 +23,9 @@ angular.module("dogs.ctrl", [])
     console.log("Error " + err);
   });
   // create new dog
-  vm.create = function() {
-    Dogs.create(vm.formData)
+  vm.create = function(data) {
+    Dogs.create(data)
     .success(function(data) {
-      vm.formData = {}; // clear formData
       vm.list = data; // update list with new dog
     })
     .error(function(err) {
@@ -44,5 +41,24 @@ angular.module("dogs.ctrl", [])
     .error(function(err) {
       console.log("Error " + err);
     });
-  }
+  };
+  // show modal dialog
+  vm.openDialog = function() {
+    // use third-party service to open simple modal dialog
+    ModalService.showModal({
+      templateUrl: "../views/create-dialog.html",
+      controller: "ModalCtrl as dialog",
+      inputs: {
+        title: "Add a new dog"
+      }
+    }).then(function(modal) {
+      modal.element.modal();
+      modal.close.then(function(result) {
+        // result is an object with new dogs params
+        if (!result.cancel) { // if not canceled dialog
+          vm.create(result);
+        }
+      });
+    });
+  };
 });
