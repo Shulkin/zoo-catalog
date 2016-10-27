@@ -15,9 +15,9 @@ angular.module("dogs.ctrl", [])
      * same as in DogsCtrl main body.
      */
     // populate dogs list
-    vm.list = data;
+    //vm.list = data;
     // create test mock list with many random dogs
-    //vm.list = DogsMock.createList(100);
+    vm.list = DogsMock.createList(11);
   })
   .error(function(err) {
     console.log("Error " + err);

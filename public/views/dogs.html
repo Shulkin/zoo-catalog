@@ -4,15 +4,31 @@
 <!-- dogs list -->
 <!-- Remark! 'dogs' is a controller DogsCtrl -->
 <div class="row">
-  <div class="col-lg-3 col-md-4 col-xs-6 thumb" ng-repeat="dog in dogs.list">
-    <a class="thumbnail" ng-click="dogs.delete(dog._id)">
-      {{dog.name}}
+  <!--
+    Arrange grid:
+    1) 2 columns per element on large screens (total 6)
+    2) 4 columns per element on medium screens (total 3)
+    3) 6 columns per element on small and extra small screens (total 2)
+  -->
+  <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb" ng-repeat="dog in dogs.list">
+    <a class="thumbnail" style="cursor: pointer">
+      <img class="img-responsive" src="http://placehold.it/150x150" alt="">
+      <div class="text-center" style="user-select: none">
+        {{dog.name}}
+      </div>
     </a>
   </div>
-  <div class="col-lg-3 col-md-4 col-xs-6 thumb">
-    <!-- Open modal dialog to create new dog on add button click -->
-    <button type="button" class="btn btn-default btn-sm" ng-click="dogs.openDialog()">
-      <span class="glyphicon glyphicon-plus"></span> Add
-    </button>
+  <!-- Last element create button -->
+  <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb">
+    <div class="thumbnail">
+      <div class="img-responsive" style="height: 150px; border: 1px solid black"> <!-- emulate 150px height image -->
+        <div class="text-center" style="position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%)">
+          <!-- Open modal dialog to create new dog on add button click -->
+          <button type="button" class="btn btn-default btn-lg" ng-click="dogs.openDialog()">
+            <span class="glyphicon glyphicon-plus"></span> Add
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
