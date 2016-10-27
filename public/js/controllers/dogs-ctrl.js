@@ -23,7 +23,8 @@ angular.module("dogs.ctrl", [])
     console.log("Error " + err);
   });
   // create new dog
-  vm.create = function(data) {
+  // keep it as a private function inside controller
+  function create(data) {
     Dogs.create(data)
     .success(function(data) {
       vm.list = data; // update list with new dog
@@ -54,9 +55,9 @@ angular.module("dogs.ctrl", [])
     }).then(function(modal) {
       modal.element.modal();
       modal.close.then(function(result) {
-        // result is an object with new dogs params
-        if (!result.cancel) { // if not canceled dialog
-          vm.create(result);
+        // result.data is an object with new dogs params
+        if (result.success === true) { // if not canceled dialog
+          create(result.data);
         }
       });
     });
