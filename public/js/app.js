@@ -10,5 +10,6 @@ var zooApp = angular.module("zoo.app", [
   "dogs.ctrl",
   "dogs.info.ctrl",
   // dogs services
-  "dogs.service"
+  "dogs.service",
+  "dogs.mock"
 ]);

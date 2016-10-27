@@ -1,6 +1,6 @@
 // we have access to Dogs factory through main module
 angular.module("dogs.ctrl", [])
-.controller("DogsCtrl", function(Dogs) {
+.controller("DogsCtrl", function(Dogs, DogsMock) {
   /*
    * Better use 'this' instead of $scope, for several reasons.
    * But you need to declare 'this' as variable first!
@@ -18,6 +18,8 @@ angular.module("dogs.ctrl", [])
      */
     // populate dogs list
     vm.list = data;
+    // create test mock list with many random dogs
+    //vm.list = DogsMock.createList(100);
   })
   .error(function(err) {
     console.log("Error " + err);
