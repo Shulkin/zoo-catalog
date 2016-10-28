@@ -1,6 +1,6 @@
 // we have access to Dogs factory through main module
 angular.module("dogs.ctrl", [])
-.controller("DogsCtrl", function(Dogs, DogsMock, ModalService) {
+.controller("DogsCtrl", function(Dogs, DogsMock, ModalService, Utils) {
   /*
    * Better use 'this' instead of $scope, for several reasons.
    * But you need to declare 'this' as variable first!
@@ -14,10 +14,11 @@ angular.module("dogs.ctrl", [])
      * Use of vm here insted of 'this' is mandatory! 'this' here is not the
      * same as in DogsCtrl main body.
      */
+    data = DogsMock.createList(100); // create test mock list with many random dogs
     // populate dogs list
-    //vm.list = data;
-    // create test mock list with many random dogs
-    vm.list = DogsMock.createList(11);
+    vm.list = data;
+    // divide list to pages, up to 11 dogs on one page
+    vm.pages = Utils.split(data.slice(), 11); // use slice() to keep original data intact
   })
   .error(function(err) {
     console.log("Error " + err);

@@ -8,14 +8,18 @@
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
+    <li ng-repeat="page in dogs.pages"><a href="#">{{$index + 1}}</a></li>
     <li>
       <a href="#" aria-label="Next">
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
+  </ul>
+</div>
+<!-- test pages -->
+<div>
+  <ul ng-repeat="page in dogs.pages">
+    <li ng-repeat="dog in page">{{dog.name}}</li>
   </ul>
 </div>
 <!-- Dogs list -->

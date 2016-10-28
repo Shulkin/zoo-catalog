@@ -9,6 +9,8 @@ var zooApp = angular.module("zoo.app", [
   "zoo.routes", // application states
   // modal controller
   "modal.ctrl",
+  // small utils
+  "utilities",
   // dogs controllers
   "dogs.ctrl",
   "dogs.info.ctrl",
