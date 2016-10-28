@@ -15,7 +15,9 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Angular -->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.2.0/ui-bootstrap-tpls.min.js"></script>
     <!-- UI-Router -->
     <script src="//unpkg.com/angular-ui-router/release/angular-ui-router.min.js"></script>
     <!-- Angular modal service by dwmkerr -->
@@ -44,7 +46,7 @@
       </div>
     </nav>
     <!-- Hide horizontal scrollbars in container when animating transitions -->
-    <div class="container-fluid my-overflow-x">
+    <div class="container">
       <!-- Dynamic content will be injected here -->
       <div ui-view></div>
     </div>

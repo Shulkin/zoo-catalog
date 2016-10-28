@@ -5,7 +5,9 @@
  */
 var zooApp = angular.module("zoo.app", [
   "ui.router", // external Angular UI-Router
+  "ui.bootstrap", // Angular UI-Bootstrap
   "ngAnimate", // animation module
+  "ngSanitize", // module provides functionality to sanitize HTML
   "angularModalService", // simple modal dialog by dwmkerr
   "zoo.routes", // application states
   // modal controller

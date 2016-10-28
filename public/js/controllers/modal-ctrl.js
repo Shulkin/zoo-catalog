@@ -13,7 +13,7 @@ angular.module("modal.ctrl", [])
    * because of the weird modal fade bug
    */
   vm.close = function() {
-    // make data validation here!
+    // make data validation
     /*
     */
     $element.modal('hide'); // manually hide the modal

@@ -1,18 +1,28 @@
 <div class="text-center">
   <!-- Header -->
   <h3>This is our dogs</h3>
-  <!-- Page navigation -->
-  <ul class="pagination">
-    <!-- highlight current page with class 'active' -->
-    <li ng-repeat="page in dogs.pages"
-        ng-class="{'active': $index == dogs.pageIndex}">
-      <!-- a.href is empty, set custom styles -->
-      <a ng-click="dogs.changePage($index)"
-        class="my-cursor-pointer my-no-user-select">
-        {{$index + 1}}
+</div>
+<!--
+  Arrange grid:
+  1) 2 columns per element on large screens (total 6)
+  2) 3 columns per element on medium screens (total 4)
+  3) 4 columns per element on small screens (total 3)
+  3) 6 columns per element on extra small screens (total 2)
+-->
+<div uib-carousel no-wrap="true"> <!-- create carousel -->
+  <!-- track pages by $index -->
+  <div uib-slide ng-repeat="page in dogs.pages track by $index" index="$index">
+    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb" ng-repeat="dog in page">
+      <!-- cursor as pointer and no border on thumbnail -->
+      <a class="thumbnail my-no-border my-cursor-pointer" ng-click="dogs.delete(dog.id)">
+        <img class="img-responsive" src="http://placehold.it/150x150" alt="">
+        <!-- don't select caption -->
+        <div class="text-center my-no-user-select">
+          {{dog.name}}
+        </div>
       </a>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>
 <!-- Dogs list -->
 <!-- Remark! 'dogs' is a controller DogsCtrl -->
@@ -21,29 +31,20 @@
   1) my-fade is a custom animation class, need ng-show to work
   2) Place my-fade and ng-show to div.row to animate whole gallery, or to a.thumbnail to animate individual elements
 -->
+<!--
 <div class="row my-fade" ng-show="dogs.fading">
-  <!--
-    Arrange grid:
-    1) 2 columns per element on large screens (total 6)
-    2) 3 columns per element on medium screens (total 4)
-    3) 4 columns per element on small screens (total 3)
-    3) 6 columns per element on extra small screens (total 2)
-  -->
-  <!-- Classes with prefix 'my' has custom styles defined in css -->
   <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb" ng-repeat="dog in dogs.currentPage">
-    <a class="thumbnail my-no-border my-cursor-pointer"> <!-- cursor as pointer -->
+    <a class="thumbnail my-no-border my-cursor-pointer" ng-click="dogs.delete(dog.id)">
       <img class="img-responsive" src="http://placehold.it/150x150" alt="">
-      <div class="text-center my-no-user-select"> <!-- don't select caption -->
+      <div class="text-center my-no-user-select">
         {{dog.name}}
       </div>
     </a>
   </div>
-  <!-- Last element create button -->
   <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb">
-    <div class="thumbnail my-no-border"> <!-- analog of a.thumbnail -->
-      <div class="my-thumbnail"> <!-- emulate 150px height image -->
-        <div class="text-center my-center-div"> <!-- div with content in center -->
-          <!-- Open modal dialog to create new dog on add button click -->
+    <div class="thumbnail my-no-border">
+      <div class="my-thumbnail">
+        <div class="text-center my-center-div">
           <button type="button" class="btn btn-default btn-lg" ng-click="dogs.openDialog()">
             <span class="glyphicon glyphicon-plus"></span> Add
           </button>
@@ -52,3 +53,4 @@
     </div>
   </div>
 </div>
+-->
