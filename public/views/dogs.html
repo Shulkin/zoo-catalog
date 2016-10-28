@@ -16,7 +16,12 @@
 </div>
 <!-- Dogs list -->
 <!-- Remark! 'dogs' is a controller DogsCtrl -->
-<div class="row">
+<!--
+  Animation - fade-in on new page
+  1) my-fade is a custom animation class, need ng-show to work
+  2) Place my-fade and ng-show to div.row to animate whole gallery, or to a.thumbnail to animate individual elements
+-->
+<div class="row my-fade" ng-show="dogs.fading">
   <!--
     Arrange grid:
     1) 2 columns per element on large screens (total 6)

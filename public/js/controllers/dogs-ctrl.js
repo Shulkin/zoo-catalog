@@ -1,6 +1,11 @@
 // we have access to Dogs factory through main module
 angular.module("dogs.ctrl", [])
-.controller("DogsCtrl", function(Dogs, DogsMock, ModalService, Utils) {
+.controller("DogsCtrl", function(Dogs, DogsMock, ModalService, Utils, $timeout) {
+  /*
+   * Better use 'this' instead of $scope, for several reasons.
+   * But you need to declare 'this' as variable first!
+   */
+  var vm = this; // view model
   // === Private ===
   // split to pages
   function splitPages(data) {
@@ -22,11 +27,6 @@ angular.module("dogs.ctrl", [])
       console.log("Error " + err);
     });
   };
-  /*
-   * Better use 'this' instead of $scope, for several reasons.
-   * But you need to declare 'this' as variable first!
-   */
-  var vm = this; // view model
   // === Constructor ===
   Dogs.getAll()
   .success(function(data) {
@@ -72,7 +72,21 @@ angular.module("dogs.ctrl", [])
   };
   // change page in gallery
   vm.changePage = function(index) {
+    /*
+     * We are starting to change page in gallery.
+     * Order of actions is very important here!
+     */
+    //First, activate fade-out animation by $scope.fading=false
+    vm.fading = false;
+    // Next, set $scope.pageIndex, it will switch the button in pagination
     vm.pageIndex = index; // selected page
-    vm.currentPage = vm.pages[index];
+    // Next, set the actual change of data in page on timeout
+    $timeout(function() {
+      // Change the data
+      vm.currentPage = vm.pages[index];
+      // At last, switch the animation to fade-in again
+      vm.fading = true;
+      // page will be shown in animation with new data
+    }, 500); // 500ms is enough
   };
 });
