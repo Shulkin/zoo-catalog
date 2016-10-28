@@ -3,23 +3,15 @@
   <h3>This is our dogs</h3>
   <!-- Page navigation -->
   <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
+    <!-- highlight current page with class 'active' -->
+    <li ng-repeat="page in dogs.pages"
+        ng-class="{'active': $index == dogs.pageIndex}">
+      <!-- a.href is empty, set custom styles -->
+      <a ng-click="dogs.changePage($index)"
+        class="my-cursor-pointer my-no-user-select">
+        {{$index + 1}}
       </a>
     </li>
-    <li ng-repeat="page in dogs.pages"><a href="#">{{$index + 1}}</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</div>
-<!-- test pages -->
-<div>
-  <ul ng-repeat="page in dogs.pages">
-    <li ng-repeat="dog in page">{{dog.name}}</li>
   </ul>
 </div>
 <!-- Dogs list -->
@@ -33,7 +25,7 @@
     3) 6 columns per element on extra small screens (total 2)
   -->
   <!-- Classes with prefix 'my' has custom styles defined in css -->
-  <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb" ng-repeat="dog in dogs.list">
+  <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb" ng-repeat="dog in dogs.currentPage">
     <a class="thumbnail my-no-border my-cursor-pointer"> <!-- cursor as pointer -->
       <img class="img-responsive" src="http://placehold.it/150x150" alt="">
       <div class="text-center my-no-user-select"> <!-- don't select caption -->
