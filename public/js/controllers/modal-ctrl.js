@@ -14,17 +14,40 @@ angular.module("modal.ctrl", [])
    */
   vm.close = function() {
     // make data validation
-    /*
-    */
-    $element.modal('hide'); // manually hide the modal
-    close({
-      success: true,
-      data: {
-        name: vm.name,
-        age: vm.age,
-        breed: vm.breed
+    // old method with jQuery
+    var formValid = true;
+    String.prototype.isEmpty = function() {
+      // if string is blank or contains only white-spaces
+      return (this.length === 0 || !this.trim());
+    };
+    $('input').each(function() { // look through all inputs
+      // find parent form-groups
+      var formGroup = $(this).parents(".form-group");
+      var glyphicon = formGroup.find(".form-control-feedback");
+      var input = formGroup.find(".form-control");
+      if (this.checkValidity() && !input.val().isEmpty()) { // html5 validation by input.pattern
+        formGroup.addClass("has-success").removeClass("has-error");
+        glyphicon.addClass("glyphicon-ok").removeClass("glyphicon-remove");
+      } else {
+        formGroup.addClass("has-error").removeClass("has-success");
+        glyphicon.addClass("glyphicon-remove").removeClass("glyphicon-ok");
+        // if one element is invalid, whole form is invalid
+        formValid = false;
       }
-    }, 500); // close, but give 500ms for bootstrap to animate
+    });
+    formValid = false;
+    // end
+    if (formValid) { // if everything is ok
+      $element.modal('hide'); // manually hide the modal
+      close({
+        success: true,
+        data: {
+          name: vm.name,
+          age: vm.age,
+          breed: vm.breed
+        }
+      }, 500); // close, but give 500ms for bootstrap to animate
+    }
   };
   vm.cancel = function() {
     $element.modal('hide');

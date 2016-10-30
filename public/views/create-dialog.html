@@ -8,27 +8,24 @@
       </div>
       <div class="modal-body">
         <form>
-          <!--
-          <div class="form-group has-success has-feedback">
-            <input type="text" class="form-control input-lg text-center"
-              id="lol" aria-describedby="inputError2Status"
-              placeholder="Some error" ng-model="dialog.name">
-            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
-            <span id="inputError2Status" class="sr-only">(error)</span>
-          </div>
-          -->
           <!-- Parameters -->
-          <div class="form-group"> <!-- name -->
+          <div class="form-group has-feedback"> <!-- name -->
+            <!-- any not empty string -->
             <input type="text" class="form-control input-lg text-center"
               placeholder="Name" ng-model="dialog.name">
+            <span class="glyphicon form-control-feedback"></span>
           </div>
-          <div class="form-group"> <!-- age -->
+          <div class="form-group has-feedback"> <!-- age -->
+            <!-- only positive integers and zero -->
             <input type="text" class="form-control input-lg text-center"
-              placeholder="Age" ng-model="dialog.age">
+              placeholder="Age" ng-model="dialog.age" pattern="^(0|[1-9]\d*)$">
+            <span class="glyphicon form-control-feedback"></span>
           </div>
-          <div class="form-group"> <!-- breed -->
+          <div class="form-group has-feedback"> <!-- breed -->
+            <!-- any not empty string -->
             <input type="text" class="form-control input-lg text-center"
               placeholder="Breed" ng-model="dialog.breed">
+            <span class="glyphicon form-control-feedback"></span>
           </div>
         </form>
       </div>
