@@ -1,6 +1,10 @@
 <div class="text-center">
   <!-- Header -->
   <h3>This is our dogs</h3>
+  <!-- Open add dog dialog -->
+  <button type="button" class="btn btn-default btn-lg" ng-click="dogs.openDialog()">
+    <span class="glyphicon glyphicon-plus"></span> Add
+  </button>
 </div>
 <!--
   Arrange grid:
@@ -14,9 +18,14 @@
   <div uib-slide ng-repeat="page in dogs.pages track by $index" index="$index">
     <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb" ng-repeat="dog in page">
       <!-- cursor as pointer and no border on thumbnail -->
-      <a class="thumbnail my-no-border my-cursor-pointer" ng-click="dogs.delete(dog.id)">
-        <img class="img-responsive" src="http://placehold.it/150x150" alt="">
-        <!-- don't select caption -->
+      <a class="thumbnail my-no-border my-cursor-pointer">
+        <!-- my-wrapper div is fixed 150x150px, same as placeholder image -->
+        <div class="my-wrapper center-block text-center">
+          <img class="img-responsive" src="http://placehold.it/150x150">
+          <!-- glyphicon-remove is placed in top-right corner -->
+          <span class="glyphicon glyphicon-remove"
+            ng-click="dogs.delete(dog._id)"></span>
+        </div>
         <div class="text-center my-no-user-select">
           {{dog.name}}
         </div>
@@ -24,33 +33,3 @@
     </div>
   </div>
 </div>
-<!-- Dogs list -->
-<!-- Remark! 'dogs' is a controller DogsCtrl -->
-<!--
-  Animation - fade-in on new page
-  1) my-fade is a custom animation class, need ng-show to work
-  2) Place my-fade and ng-show to div.row to animate whole gallery, or to a.thumbnail to animate individual elements
--->
-<!--
-<div class="row my-fade" ng-show="dogs.fading">
-  <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb" ng-repeat="dog in dogs.currentPage">
-    <a class="thumbnail my-no-border my-cursor-pointer" ng-click="dogs.delete(dog.id)">
-      <img class="img-responsive" src="http://placehold.it/150x150" alt="">
-      <div class="text-center my-no-user-select">
-        {{dog.name}}
-      </div>
-    </a>
-  </div>
-  <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb">
-    <div class="thumbnail my-no-border">
-      <div class="my-thumbnail">
-        <div class="text-center my-center-div">
-          <button type="button" class="btn btn-default btn-lg" ng-click="dogs.openDialog()">
-            <span class="glyphicon glyphicon-plus"></span> Add
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
--->

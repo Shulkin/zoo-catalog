@@ -1,3 +1,7 @@
+.carousel {
+  /* rewrite uib-carousel style and place it a little bit lower */
+  margin-top: 1em;
+}
 .my-cursor-pointer {
   cursor: pointer;
 }
@@ -12,14 +16,20 @@
   -ms-user-select: none; /* Internet Explorer/Edge */
   user-select: none; /* Non-prefixed version */
 }
-.my-thumbnail {
+.my-wrapper {
+  /* fixed width and height equals to image placeholder*/
+  width: 150px;
   height: 150px;
 }
-.my-center-div {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
+.my-wrapper .glyphicon-remove {
+  position: relative;
+  /* place glyphicon on top-right corner of my-wrapper */
+  top: -145px;
+  right: -63px;
+  /* get rid of underline on hover parent */
+  display: inline-block;
+}
+.my-wrapper .glyphicon-remove:hover {
+  /* slight orange color */
+  color: #ddb352;
 }
