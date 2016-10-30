@@ -1,6 +1,37 @@
+/* Carousel */
+/* rewrite uib-carousel style */
 .carousel {
-  /* rewrite uib-carousel style and place it a little bit lower */
+  /* place it a little bit lower */
   margin-top: 1em;
+}
+.carousel-control.left, .carousel-control.right {
+  /* remove semi-transparent background */
+  background-image: none !important;
+}
+.carousel-inner {
+  /* make it on top of controls */
+  /*z-index: 9999;*/
+}
+a.right.carousel-control {
+  /* move right arrow a little bit to the right */
+  right: -10%;
+  color: grey;
+  border: 1px solid black;
+}
+a.left.carousel-control {
+  /* left arrow a little bit to the left */
+  left: -10%;
+  color: grey;
+  border: 1px solid black;
+}
+ol.carousel-indicators {
+  /* indicators lower */
+  position: absolute !important;
+  bottom: -5%;
+}
+ol.carousel-indicators li {
+  background-color: grey;
+  border: 1px solid black;
 }
 .my-cursor-pointer {
   cursor: pointer;
