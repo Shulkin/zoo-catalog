@@ -9,7 +9,7 @@ angular.module("dogs.ctrl", [])
    */
   var vm = this; // store 'this' in 'vm' variable
   // === Private ===
-  vm.active = 0; // first page is activa by default
+  vm.active = 0; // first page is active by default
   function split(data) {
     // up to 12 dogs on one page
     return Utils.split(data, DogsPerPage);

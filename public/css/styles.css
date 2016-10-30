@@ -8,30 +8,32 @@
   /* remove semi-transparent background */
   background-image: none !important;
 }
-.carousel-inner {
-  /* make it on top of controls */
-  /*z-index: 9999;*/
-}
 a.right.carousel-control {
   /* move right arrow a little bit to the right */
-  right: -10%;
+  right: -2%;
+  width: 30px; /* make it narrower */
   color: grey;
-  border: 1px solid black;
 }
 a.left.carousel-control {
   /* left arrow a little bit to the left */
-  left: -10%;
+  left: -2%;
+  width: 30px; /* make it narrower */
   color: grey;
-  border: 1px solid black;
 }
 ol.carousel-indicators {
-  /* indicators lower */
+  /* move indicators lower */
   position: absolute !important;
-  bottom: -5%;
+  bottom: -15px;
 }
 ol.carousel-indicators li {
+  /* inner color */
+  background-color: white;
+  /* circle border */
+  border: 1px solid grey;
+}
+ol.carousel-indicators li.active {
+  /* indicator of active slide */
   background-color: grey;
-  border: 1px solid black;
 }
 .my-cursor-pointer {
   cursor: pointer;
