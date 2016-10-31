@@ -26,11 +26,7 @@ router.route("/")
     breed: req.body.breed
   }, function(err, dog) {
     if (err) res.send(err);
-    // return updated list with new dog
-    Dog.find(function(err, dogs) {
-      if (err) res.send(err);
-      res.json(dogs);
-    });
+    res.json(dog); // new dog
   });
 });
 
@@ -40,8 +36,7 @@ router.route("/:dog_id")
 .get(function(req, res) {
   Dog.findById(req.params.dog_id, function(err, dog) {
     if (err) res.send(err);
-    // found a dog!
-    res.json(dog);
+    res.json(dog); // found a dog!
   });
 })
 // update dog info (PUT http://localhost:3000/api/dogs/dog_id)
@@ -53,8 +48,7 @@ router.route("/:dog_id")
     dog.breed = req.body.breed;
     dog.save(function(err) {
       if (err) res.send(err);
-      // return updated dog
-      res.json(dog);
+      res.json(dog); // updated dog
     });
   });
 })
@@ -64,12 +58,7 @@ router.route("/:dog_id")
     _id: req.params.dog_id
   }, function(err, dog) {
     if (err) res.send(err);
-    // delete success!
-    // return list without a dog
-    Dog.find(function(err, dogs) {
-      if (err) res.send(err);
-      res.json(dogs);
-    });
+    res.json(dog); // deleted dog
   })
 });
 

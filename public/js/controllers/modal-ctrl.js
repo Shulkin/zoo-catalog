@@ -14,7 +14,7 @@ angular.module("modal.ctrl", [])
    */
   vm.close = function() {
     // make data validation
-    // old method with jQuery
+    // === old method with jQuery ===
     var formValid = true;
     String.prototype.isEmpty = function() {
       // if string is blank or contains only white-spaces
@@ -35,8 +35,7 @@ angular.module("modal.ctrl", [])
         formValid = false;
       }
     });
-    formValid = false;
-    // end
+    // === end ===
     if (formValid) { // if everything is ok
       $element.modal('hide'); // manually hide the modal
       close({

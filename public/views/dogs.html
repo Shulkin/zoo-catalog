@@ -17,7 +17,8 @@
 <div uib-carousel active="active" no-wrap="true">
   <!-- track pages by $index -->
   <div uib-slide ng-repeat="page in dogs.pages track by $index" index="$index">
-    <div class="col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb" ng-repeat="dog in page">
+    <!-- my-fade implements simple animation on add/delete item -->
+    <div class="my-fade col-lg-2 col-md-3 col-sm-4 col-xs-6 thumb" ng-repeat="dog in page">
       <!-- cursor as pointer and no border on thumbnail -->
       <a class="thumbnail my-no-border my-cursor-pointer">
         <!-- my-wrapper div is fixed 150x150px, same as placeholder image -->
