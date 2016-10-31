@@ -14,7 +14,6 @@ var port = process.env.PORT || 3000;
 var database = require("./config/database");
 // connect to database
 mongoose.connect(database.url);
-
 // === Configure ===
 // set up list of express middlewares
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

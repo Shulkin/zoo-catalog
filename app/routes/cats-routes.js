@@ -8,7 +8,6 @@ var router = express.Router();
  * when we put any data through api
  */
 var Cat = require("../models/cat");
-
 // process routes api/cats/
 router.route("/")
 // get all cats (GET http://localhost:3000/api/cats)
@@ -26,14 +25,13 @@ router.route("/")
     breed: req.body.breed
   }, function(err, cat) {
     if (err) res.send(err);
-    // return updated list with new dog
+    // return updated list with new cat
     Cat.find(function(err, cats) {
       if (err) res.send(err);
       res.json(cats);
     });
   });
 });
-
 // process routes api/dogs/:dog_id
 router.route("/:cat_id")
 // get a dog by id (GET http://localhost:3000/api/cats/cat_id)
@@ -67,5 +65,4 @@ router.route("/:cat_id")
     // delete success!
   })
 });
-
 module.exports = router;

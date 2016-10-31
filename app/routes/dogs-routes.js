@@ -8,7 +8,6 @@ var router = express.Router();
  * when we put any data through api
  */
 var Dog = require("../models/dog");
-
 // process routes api/dogs/
 router.route("/")
 // get all dogs (GET http://localhost:3000/api/dogs)
@@ -26,10 +25,18 @@ router.route("/")
     breed: req.body.breed
   }, function(err, dog) {
     if (err) res.send(err);
-    res.json(dog); // new dog
+    // return dogs list AND new dog data
+    Dog.find(function(err, dogs) {
+      if (err) res.send(err);
+      res.json({
+        "list": dogs, // from Dog.find
+        "created": {
+          "dog": dog // from Dog.create
+        }
+      });
+    });
   });
 });
-
 // process routes api/dogs/:dog_id
 router.route("/:dog_id")
 // get a dog by id (GET http://localhost:3000/api/dogs/dog_id)
@@ -58,12 +65,16 @@ router.route("/:dog_id")
     _id: req.params.dog_id
   }, function(err, data) {
     if (err) res.send(err);
-    // return list without deleted dog
+    // return dogs list AND deleted dog id
     Dog.find(function(err, dogs) {
       if (err) res.send(err);
-      res.json(dogs);
+      res.json({
+        "list": dogs,
+        "deleted": {
+          "_id": req.params.dog_id
+        }
+      });
     });
   })
 });
-
 module.exports = router;
