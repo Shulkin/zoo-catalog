@@ -69,14 +69,8 @@ ol.carousel-indicators li.active {
 }
 /* Animation */
 .my-fade {
-  transition: 1s linear all;
-  -webkit-transition: 1s linear all;
-}
-.my-fade.ng-enter {
-  opacity: 0;
-}
-.my-fade.ng-enter.ng-enter-active {
-  opacity: 1;
+  transition: 0.4s linear all;
+  -webkit-transition: 0.4s linear all;
 }
 .my-fade.ng-leave {
   opacity: 1;

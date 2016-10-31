@@ -56,9 +56,13 @@ router.route("/:dog_id")
 .delete(function(req, res) {
   Dog.remove({
     _id: req.params.dog_id
-  }, function(err, dog) {
+  }, function(err, data) {
     if (err) res.send(err);
-    res.json(dog); // deleted dog
+    // return list without deleted dog
+    Dog.find(function(err, dogs) {
+      if (err) res.send(err);
+      res.json(dogs);
+    });
   })
 });
 

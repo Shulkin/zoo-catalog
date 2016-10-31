@@ -11,28 +11,42 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
    */
   var vm = this; // store 'this' in 'vm' variable
   // === Private ===
-  vm.active = 0; // first page is active by default
+  Array.prototype.isEmpty = function() {
+    return this.length < 1;
+  }
+  Array.prototype.last = function() {
+    return this[this.length - 1];
+  }
   function split(data) {
     // split list on pages
     return Utils.split(data, DogsPerPage);
   }
-  // create prototype function get last element in array
-  Array.prototype.last = function() {
-    return this[this.length-1];
+  // init will be called on controller start
+  function init() {
+    vm.pages = [[]]; // create empty gallery
+    vm.active = 0; // first page is active by default
+    Dogs.getAll()
+    .success(function(data) {
+      vm.pages = split(data);
+      if (vm.pages.isEmpty()) {
+        vm.pages = [[]];
+      }
+    })
+    .error(function(err) {
+      console.log("Error " + err);
+    });
   }
   // create new dog
   function create(data) {
     Dogs.create(data)
     .success(function(data) {
-      //vm.pages = split(data);
-      // Notice! 'this' here is not the same as 'this' in DogsCtrl main body
+      // push new data to last page
       var lastPage = vm.pages.last();
       // create new page if necessary
       if (lastPage.length >= DogsPerPage) {
         vm.pages.push([]);
         lastPage = vm.pages.last();
       }
-      // push new dog to last place to properly animate it
       lastPage.push(data);
     })
     .error(function(err) {
@@ -40,22 +54,52 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
     });
   };
   // === Constructor ===
-  Dogs.getAll()
-  .success(function(data) {
-    // create test mock list with many random dogs
-    //data = DogsMock.createList(100); // rewrite data
-    // divide dogs list to pages
-    vm.pages = split(data);
-  })
-  .error(function(err) {
-    console.log("Error " + err);
-  });
+  init();
   // === Public ===
   // delete a dog
   vm.delete = function(id) {
     Dogs.delete(id)
     .success(function(data) {
       vm.pages = split(data);
+      if (vm.pages.isEmpty()) {
+        vm.pages = [[]];
+      }
+      //vm.pages = split(data);
+      /*
+      //==
+      var abort = false;
+      for (var i = 0; i < vm.pages.length; i++) {
+        var page = vm.pages[i];
+        for (var j = 0; j < page.length; j++) {
+          if (data._id == page[j]._id) {
+            page.splice(j, 1);
+            if (page.isEmpty()) {
+              if (i > 0) {
+                vm.pages.splice(i, 1);
+                vm.active = i - 1;
+              } else {
+                vm.pages.push([]);
+              }
+            }
+            abort = true;
+            break;
+          }
+        }
+        if (abort) break;
+      }
+      //==
+      for (var k = i; k < vm.pages.length; k++) {
+        if (k < vm.pages.length - 1) {
+          page = vm.pages[k];
+          var nextPage = vm.pages[k + 1];
+          page.push(nextPage.shift());
+          if (nextPage.length < 1) {
+            vm.pages.pop();
+          }
+        }
+      }
+      //==
+      */
     })
     .error(function(err) {
       console.log("Error " + err);

@@ -1,12 +1,18 @@
 angular.module("modal.ctrl", [])
 .controller("ModalCtrl", function($element, title, close) {
   var vm = this;
+  // === Private ===
   // init params
   vm.name = null;
   vm.age = null;
   vm.breed = null;
   // show title
   vm.title = title;
+  // // check if string is empty or contain only white-spaces
+  String.prototype.isEmpty = function() {
+    return (this.length === 0 || !this.trim());
+  };
+  // === Public ===
   /*
    * This functions must use the bootstrap 'modal' function because
    * the corresponding buttons doesn't have the 'data-dismiss' attribute,
@@ -16,10 +22,6 @@ angular.module("modal.ctrl", [])
     // make data validation
     // === old method with jQuery ===
     var formValid = true;
-    String.prototype.isEmpty = function() {
-      // if string is blank or contains only white-spaces
-      return (this.length === 0 || !this.trim());
-    };
     $('input').each(function() { // look through all inputs
       // find parent form-groups
       var formGroup = $(this).parents(".form-group");
