@@ -8,7 +8,7 @@ angular.module("modal.ctrl", [])
   vm.breed = null;
   // show title
   vm.title = title;
-  // // check if string is empty or contain only white-spaces
+  // check if string is empty or contain only white-spaces
   String.prototype.isEmpty = function() {
     return (this.length === 0 || !this.trim());
   };

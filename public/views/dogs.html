@@ -13,8 +13,8 @@
   3) 4 columns per element on small screens (total 3)
   3) 6 columns per element on extra small screens (total 2)
 -->
-<!-- create carousel and disable animation on change screen size -->
-<div uib-carousel class="ng-animation-disabled" active="active" no-wrap="true">
+<!-- create carousel -->
+<div uib-carousel active="active" no-wrap="true">
   <!-- track pages by $index -->
   <div uib-slide ng-repeat="page in dogs.pages track by $index" index="$index">
     <!-- animate my-fade only when necessary -->

@@ -1,11 +1,8 @@
 // we have access to Dogs factory through main module
-angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
-.config(function($animateProvider) {
-  // disable animation in carousel
-  $animateProvider.classNameFilter(/^(?:(?!ng-animation-disabled).)*$/);
-})
+angular.module("dogs.ctrl", [])
 .value("DogsPerPage", 12) // number of dogs per page
-.value("FadeDuration", 1000) // duration of animation, ms
+.value("FadeDuration", 500) // duration of items fade, ms
+.value("Delay", 100) // delay between toggle animation
 .controller("DogsCtrl", function(
   Dogs, // dogs service
   DogsMock, // mock service to populate list with test data
@@ -14,8 +11,8 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
   // constants
   DogsPerPage,
   FadeDuration,
-  // Angular objects
-  $scope,
+  Delay,
+  // Angular $timeout
   $timeout) {
   /*
    * Better use 'this' instead of $scope, for several reasons.
@@ -30,9 +27,15 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
   Array.prototype.last = function() {
     return this[this.length - 1];
   }
-  // toggle animation on add/delete items in gallery
-  function animate(val) {
-    vm.animate = val;
+  // toggle gallery animation
+  function animate(val, fn) {
+    // $scope.animate will affect ng-class in items div
+    vm.animate = val; // toggle
+    /* call fn() handler with 100ms timeout
+     * to make sure that change in ng-class applied */
+    $timeout(function() {
+      fn(); // call handler
+    }, Delay);
   }
   // split list to pages
   function split(data) {
@@ -49,25 +52,25 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
   function init() {
     vm.pages = [[]]; // one empty page
     vm.active = 0; // active by default
-    animate(false); // disable animation
-    Dogs.getAll()
-    .success(function(data) {
-      reload(data);
-    })
-    .error(function(err) {
-      console.log("Error " + err);
+    /* disable animation AND after
+     * 100ms get dogs data */
+    animate(false, function() {
+      Dogs.getAll()
+      .success(function(data) {
+        reload(data);
+      })
+      .error(function(err) {
+        console.log("Error " + err);
+      });
     });
   }
   // create new dog
   function create(data) {
     Dogs.create(data)
     .success(function(data) {
-      /* Enable animation to properly show
-       * new item appears in list */
-      animate(true);
-      // start animation with slight timeout
-      $timeout(function() {
-        // animation will last 1s (!)
+      /* enable animation and add dog to gallery */
+      animate(true, function() {
+        // fade-in animation will last 500ms
         var lastPage = vm.pages.last();
         // create new page if necessary
         if (lastPage.length >= DogsPerPage) {
@@ -75,17 +78,16 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
           lastPage = vm.pages.last();
         }
         /* Push new dog to last page.
-         * It will be animated by slow fade */
+         * It will be animated by slow fade-in */
         lastPage.push(data.created.dog);
-      }, 100);
-      /* Wait A LITTLE BIT MORE than 'FadeDuration' and then
-       * disable animation and reload actual data from response */
+      });
+      /* wait A LITTLE BIT MORE than 'FadeDuration' and then disable
+       * animation and AFTER MORE 100ms reload actual data from response */
       $timeout(function() {
-        animate(false);
-        $timeout(function() {
+        animate(false, function() {
           reload(data.list);
-        }, 200); // after more 200ms update list with actual data
-      }, FadeDuration); // wait for animation and disable it
+        });
+      }, FadeDuration);
     })
     .error(function(err) {
       console.log("Error " + err);
@@ -96,23 +98,18 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
   // === Public ===
   // delete a dog
   vm.delete = function(id) {
-    //alert("delete a dog_" + id);
     Dogs.delete(id)
     .success(function(data) {
-      //alert("delete success!");
-      /* Enable animation and show item
-       * slowly fade out */
-      //alert("enable animation");
-      animate(true);
-      $timeout(function() {
-        // animation will last 1s (!)
+      /* enable animation and splice dog from
+       * current page, thus slowly fade it out */
+      animate(true, function() {
+        // fade-out animation will last 500ms
         var abort = false;
-        //alert("start loop...");
         // find deleted dog by _id on page and splice it
         for (var i = 0; i < vm.pages.length; i++) {
           for (var j = 0; j < vm.pages[i].length; j++) {
             if (data.deleted._id == vm.pages[i][j]._id) {
-              //alert("splice page_" + i + " at " + j);
+              // this will be animated by slow fade-out
               vm.pages[i].splice(j, 1);
               abort = true;
               break;
@@ -120,16 +117,12 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
           }
           if (abort) break;
         }
-      }, 100)
-      //alert("splice ended, start timeout...");
-      /* Disable animation and reload list */
+      });
+      /* reload actual data after animation ends */
       $timeout(function() {
-        //alert("waited for animation to end and disable animation");
-        animate(false);
-        $timeout(function() {
-          //alert("wait 200ms more and reload list");
+        animate(false, function() {
           reload(data.list);
-        }, 200);
+        });
       }, FadeDuration);
     })
     .error(function(err) {
