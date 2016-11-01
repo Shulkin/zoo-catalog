@@ -148,4 +148,8 @@ angular.module("dogs.ctrl", [])
       });
     });
   };
+  // select dog in gallery
+  vm.select = function(id) {
+    Dogs.setSelectedId(id);
+  };
 });
