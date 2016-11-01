@@ -1,7 +1,9 @@
 angular.module("dogs.info.ctrl", [])
-.controller("DogsInfoCtrl", function(Dogs) {
+.controller("DogsInfoCtrl", function(Dogs, $stateParams) {
   var vm = this;
-  Dogs.get(Dogs.getSelectedId())
+  // receive dogs id from url
+  var id = $stateParams.id;
+  Dogs.get(id)
   .success(function(dog) {
     vm.name = dog.name;
     vm.age = dog.age;

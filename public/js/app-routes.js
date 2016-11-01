@@ -18,8 +18,12 @@ angular.module("zoo.routes", []).config(
   })
   // nested view, dogs info
   .state("dogs.info", {
-    url: "/dog-info",
-    templateUrl: "./views/dogs-info.html",
-    controller: "DogsInfoCtrl as dog"
+    url: "/:id",
+    views: {
+      "dogs-info": { // unique name to reference
+        templateUrl: "./views/dogs-info.html",
+        controller: "DogsInfoCtrl as dog"
+      }
+    }
   });
 }]);

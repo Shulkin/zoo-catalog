@@ -22,11 +22,9 @@
       ng-class="{'my-fade': dogs.animate}" ng-repeat="dog in page">
       <!--
         1) cursor as pointer and no border on thumbnail
-        2) ui-sref leads to info state
-        3) dogs.select() save selected id in factory for DogsInfoCtrl
+        2) ui-sref leads to dogs.info state with corresponding dog._id
       -->
-      <a class="thumbnail my-no-border my-cursor-pointer"
-        ng-click="dogs.select(dog._id)" ui-sref=".info">
+      <a class="thumbnail my-no-border my-cursor-pointer" ui-sref=".info({id: dog._id})">
         <!-- my-wrapper div is fixed 150x150px, same as placeholder image -->
         <div class="my-wrapper center-block text-center">
           <img class="img-responsive" src="http://placehold.it/150x150">
@@ -41,7 +39,8 @@
     </div>
   </div>
 </div>
-<!-- container for dogs info -->
-<div class="container">
-  <div ui-view></div>
+<!-- thumbnail container for dogs card -->
+<div class="thumbnail" style="margin-top: 1em"
+  ng-show="$state.includes('dogs.info')"> <!-- show only on .info state -->
+  <div ui-view="dogs-info"></div>
 </div>

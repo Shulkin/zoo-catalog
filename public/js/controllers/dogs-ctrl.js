@@ -13,13 +13,18 @@ angular.module("dogs.ctrl", [])
   FadeDuration,
   Delay,
   // Angular $timeout
-  $timeout) {
+  $timeout,
+  $scope,
+  $state) {
   /*
    * Better use 'this' instead of $scope, for several reasons.
    * But you need to declare 'this' as variable first, because 'this' in
    * handler functions is not the same as 'this' in DogsCtrl main body
    */
   var vm = this; // store 'this' in 'vm' variable
+  /* store state we are in...
+   * I need it to show info container ONLY on .info states */
+  $scope.$state = $state;
   // === Private ===
   Array.prototype.isEmpty = function() {
     return this.length < 1;
@@ -147,9 +152,5 @@ angular.module("dogs.ctrl", [])
         }
       });
     });
-  };
-  // select dog in gallery
-  vm.select = function(id) {
-    Dogs.setSelectedId(id);
   };
 });
