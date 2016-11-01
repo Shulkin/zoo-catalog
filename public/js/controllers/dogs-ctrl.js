@@ -5,9 +5,18 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
   $animateProvider.classNameFilter(/^(?:(?!ng-animation-disabled).)*$/);
 })
 .value("DogsPerPage", 12) // number of dogs per page
+.value("FadeDuration", 1000) // duration of animation, ms
 .controller("DogsCtrl", function(
-  Dogs, DogsPerPage, DogsMock,
-  Utils, ModalService, $timeout) {
+  Dogs, // dogs service
+  DogsMock, // mock service to populate list with test data
+  Utils, // utilities service
+  ModalService, // modal windows
+  // constants
+  DogsPerPage,
+  FadeDuration,
+  // Angular objects
+  $scope,
+  $timeout) {
   /*
    * Better use 'this' instead of $scope, for several reasons.
    * But you need to declare 'this' as variable first, because 'this' in
@@ -21,6 +30,7 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
   Array.prototype.last = function() {
     return this[this.length - 1];
   }
+  // toggle animation on add/delete items in gallery
   function animate(val) {
     vm.animate = val;
   }
@@ -55,23 +65,27 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
       /* Enable animation to properly show
        * new item appears in list */
       animate(true);
-      var lastPage = vm.pages.last();
-      // create new page if necessary
-      if (lastPage.length >= DogsPerPage) {
-        vm.pages.push([]);
-        lastPage = vm.pages.last();
-      }
-      // push new dog to last page
-      // this will be animated slow fade
-      lastPage.push(data.created.dog);
-      /* Disable animation by timeout and just
-       * force reload new list */
-      $timeout(function () {
+      // start animation with slight timeout
+      $timeout(function() {
+        // animation will last 1s (!)
+        var lastPage = vm.pages.last();
+        // create new page if necessary
+        if (lastPage.length >= DogsPerPage) {
+          vm.pages.push([]);
+          lastPage = vm.pages.last();
+        }
+        /* Push new dog to last page.
+         * It will be animated by slow fade */
+        lastPage.push(data.created.dog);
+      }, 100);
+      /* Wait A LITTLE BIT MORE than 'FadeDuration' and then
+       * disable animation and reload actual data from response */
+      $timeout(function() {
         animate(false);
         $timeout(function() {
           reload(data.list);
-        }, 500); // after more 0.5s reload data
-      }, 100); // enable animation after 0.1s
+        }, 200); // after more 200ms update list with actual data
+      }, FadeDuration); // wait for animation and disable it
     })
     .error(function(err) {
       console.log("Error " + err);
@@ -82,30 +96,41 @@ angular.module("dogs.ctrl", ["ngAnimate"]) // inject hgAnimate here
   // === Public ===
   // delete a dog
   vm.delete = function(id) {
+    //alert("delete a dog_" + id);
     Dogs.delete(id)
     .success(function(data) {
-      /* The same, enable animation and do neat job */
+      //alert("delete success!");
+      /* Enable animation and show item
+       * slowly fade out */
+      //alert("enable animation");
       animate(true);
-      var abort = false;
-      // find deleted dog in list and show it slowly fade
-      for (var i = 0; i < vm.pages.length; i++) {
-        var page = vm.pages[i];
-        for (var j = 0; j < page.length; j++) {
-          if (data.deleted._id == page[j]._id) {
-            page.splice(j, 1);
-            abort = true;
-            break;
+      $timeout(function() {
+        // animation will last 1s (!)
+        var abort = false;
+        //alert("start loop...");
+        // find deleted dog by _id on page and splice it
+        for (var i = 0; i < vm.pages.length; i++) {
+          for (var j = 0; j < vm.pages[i].length; j++) {
+            if (data.deleted._id == vm.pages[i][j]._id) {
+              //alert("splice page_" + i + " at " + j);
+              vm.pages[i].splice(j, 1);
+              abort = true;
+              break;
+            }
           }
+          if (abort) break;
         }
-        if (abort) break;
-      }
-      /* Then just screw it load a new list */
-      $timeout(function () {
+      }, 100)
+      //alert("splice ended, start timeout...");
+      /* Disable animation and reload list */
+      $timeout(function() {
+        //alert("waited for animation to end and disable animation");
         animate(false);
         $timeout(function() {
+          //alert("wait 200ms more and reload list");
           reload(data.list);
-        }, 500);
-      }, 100);
+        }, 200);
+      }, FadeDuration);
     })
     .error(function(err) {
       console.log("Error " + err);
