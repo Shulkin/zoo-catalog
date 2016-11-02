@@ -31,7 +31,7 @@
           <!-- glyphicon-remove is placed in top-right corner -->
           <!-- stopProp() not allows ui-sref to activate on dog remove -->
           <span class="glyphicon glyphicon-remove"
-            ng-click="dogs.delete(dog._id); dogs.stopProp($event)"></span>
+            ng-click="dogs.stopProp($event); dogs.delete(dog._id)"></span>
         </div>
         <div class="text-center my-no-user-select">
           {{dog.name}}

@@ -97,12 +97,13 @@ angular.module("dogs.ctrl", [])
   // === Constructor ===
   init();
   // === Public ===
-  /* use stopPropagation() to stop at ng-click remove
-   * button and not go further to parents ui-sref */
+  /* use stopPropagation() to stop at ng-click button
+   * and not go further to parents ui-sref */
   vm.stopProp = function($event) {
-    //$event.stopPropagation();
-    //$event.preventDefault();
+    // prevents ng-click to be executed
     $event.stopImmediatePropagation();
+    // prevents href
+    $event.preventDefault();
   }
   // delete a dog
   vm.delete = function(id) {
