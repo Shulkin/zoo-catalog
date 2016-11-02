@@ -9,13 +9,9 @@ angular.module("dogs.ctrl", [])
   Utils, // utilities service
   ModalService, // modal windows
   // constants
-  DogsPerPage,
-  FadeDuration,
-  Delay,
-  // Angular $timeout
-  $timeout,
-  $scope,
-  $state) {
+  DogsPerPage, FadeDuration, Delay,
+  // Angular objects
+  $timeout, $scope, $state) {
   /*
    * Better use 'this' instead of $scope, for several reasons.
    * But you need to declare 'this' as variable first, because 'this' in
@@ -101,6 +97,13 @@ angular.module("dogs.ctrl", [])
   // === Constructor ===
   init();
   // === Public ===
+  /* use stopPropagation() to stop at ng-click remove
+   * button and not go further to parents ui-sref */
+  vm.stopProp = function($event) {
+    //$event.stopPropagation();
+    //$event.preventDefault();
+    $event.stopImmediatePropagation();
+  }
   // delete a dog
   vm.delete = function(id) {
     Dogs.delete(id)

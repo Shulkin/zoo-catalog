@@ -3,9 +3,7 @@ angular.module("modal.ctrl", [])
   var vm = this;
   // === Private ===
   // init params
-  vm.name = null;
-  vm.age = null;
-  vm.breed = null;
+  [vm.name, vm.age, vm.breed] = [null, null, null]
   // show title
   vm.title = title;
   // check if string is empty or contain only white-spaces

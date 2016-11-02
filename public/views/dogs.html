@@ -29,8 +29,9 @@
         <div class="my-wrapper center-block text-center">
           <img class="img-responsive" src="http://placehold.it/150x150">
           <!-- glyphicon-remove is placed in top-right corner -->
+          <!-- stopProp() not allows ui-sref to activate on dog remove -->
           <span class="glyphicon glyphicon-remove"
-            ng-click="dogs.delete(dog._id)"></span>
+            ng-click="dogs.delete(dog._id); dogs.stopProp($event)"></span>
         </div>
         <div class="text-center my-no-user-select">
           {{dog.name}}
