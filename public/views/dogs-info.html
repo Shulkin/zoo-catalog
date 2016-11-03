@@ -4,10 +4,25 @@
       <!-- close info button, return to dogs list view -->
       <a ui-sref="dogs"><b>Close</b></span></a>
       <!-- dogs params -->
-      <h2><b>Name:</b> <span>{{dog.name}}</span></h2>
+      <h2><b>Name:</b>
+        <span ng-click="dog.startEdit('name')"
+          ng-hide="dog.edit.name">{{dog.name}}</span>
+        <input type="text" ng-blur="dog.submit('name')"
+          ng-model="dog.name" ng-show="dog.edit.name">
+      </h2>
       <div>
-        <h3><b>Age:</b> <span>{{dog.age}}</span></h3>
-        <h3><b>Breed:</b> <span>{{dog.breed}}</span></h3>
+        <h3><b>Age:</b>
+          <span ng-click="dog.startEdit('age')"
+            ng-hide="dog.edit.age">{{dog.age}}</span>
+          <input type="text" ng-blur="dog.submit('age')"
+            ng-model="dog.age" ng-show="dog.edit.age">
+        </h3>
+        <h3><b>Breed:</b>
+          <span ng-click="dog.startEdit('breed')"
+            ng-hide="dog.edit.breed">{{dog.breed}}</span>
+          <input type="text" ng-blur="dog.submit('breed')"
+            ng-model="dog.breed" ng-show="dog.edit.breed">
+        </h3>
       </div>
       <hr> <!-- add separator -->
       <div>
