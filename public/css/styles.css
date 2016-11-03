@@ -67,6 +67,17 @@ ol.carousel-indicators li.active {
   /* slight orange color */
   color: #ddb352;
 }
+/* move text in card a little bit from the left corner */
+.my-info-card {
+  margin-left: 1em;
+}
+/* separate vertical divs in card */
+.my-info-card div {
+  margin-top: 1em;
+}
+.my-info-card hr {
+  border-color: black;
+}
 /* Animation */
 .my-fade {
   transition: 0.5s linear all;
